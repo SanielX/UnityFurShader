@@ -8,7 +8,8 @@
         
         _MainTex ("Texture", 2D) = "white" { }
         _FurTex ("Fur Pattern", 2D) = "white" { }
-        
+		_FurMask("Fur Mask", 2D) = "white" {}
+
         _FurLength ("Fur Length", Range(0.0, 1)) = 0.5
         _FurDensity ("Fur Density", Range(0, 2)) = 0.11
         _FurThinness ("Fur Thinness", Range(0.01, 10)) = 1
@@ -34,7 +35,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_surface
                 #pragma fragment frag_surface
                 #define FURSTEP 0.00
@@ -47,7 +48,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.05
@@ -60,7 +61,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.10
@@ -73,7 +74,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.15
@@ -86,7 +87,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.20
@@ -99,7 +100,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.25
@@ -112,7 +113,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.30
@@ -125,7 +126,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.35
@@ -138,7 +139,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.40
@@ -151,7 +152,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.45
@@ -164,7 +165,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.50
@@ -177,7 +178,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.55
@@ -190,7 +191,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.60
@@ -203,7 +204,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.65
@@ -216,7 +217,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.70
@@ -229,7 +230,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.75
@@ -242,7 +243,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.80
@@ -255,7 +256,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.85
@@ -268,7 +269,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.90
@@ -281,7 +282,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 0.95
@@ -294,7 +295,7 @@
             Pass
             {
                 CGPROGRAM
-                
+				#pragma multi_compile_fog
                 #pragma vertex vert_base
                 #pragma fragment frag_base
                 #define FURSTEP 1.00
@@ -303,6 +304,42 @@
                 ENDCG
                 
             }
+
+		/*	Pass
+			{
+				CGPROGRAM
+				#pragma multi_compile_fog
+				#include "UnityCG.cginc"
+				#pragma vertex vert
+				#pragma fragment frag
+
+			struct v2f
+			{
+				float4 pos: SV_POSITION;
+				half2 uv: TEXCOORD0;
+				UNITY_FOG_COORDS(1)
+			};
+
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+
+			v2f vert(appdata_base v) {
+				v2f o;
+				o.pos = UnityObjectToClipPos(v.vertex);
+				o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+
+				UNITY_TRANSFER_FOG(o, o.pos);
+				return o;
+			}
+
+			fixed4 frag(v2f i) : COLOR
+			{
+				fixed4 color = tex2D(_MainTex, i.uv);
+				UNITY_APPLY_FOG(i.fogCoord, color);
+				return color;
+			}
+				ENDCG
+			}*/
         }
     }
 }

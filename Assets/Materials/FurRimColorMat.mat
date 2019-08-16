@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: FurRimColorMat
   m_Shader: {fileID: 4800000, guid: 39ab10d6b47cc4843bc85a9490ef71f3, type: 3}
   m_ShaderKeywords: 
@@ -36,6 +37,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FurMask:
+        m_Texture: {fileID: 2800000, guid: 0cad6bcf5af4cfb4998073853ae5fa4f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FurTex:
@@ -71,11 +76,11 @@ Material:
     - _Diffuse: 1
     - _DstBlend: 0
     - _EdgeFade: 0.66
-    - _FurDensity: 0.57
+    - _FurDensity: 2
     - _FurHardness: 1
-    - _FurLength: 0.04
-    - _FurShading: 0.302
-    - _FurThinness: 5
+    - _FurLength: 0.06
+    - _FurShading: 0.488
+    - _FurThinness: 6.28
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -84,8 +89,8 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Reflection: 0
-    - _RimPower: 2.6
-    - _Shininess: 15
+    - _RimPower: 4.71
+    - _Shininess: 27
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
