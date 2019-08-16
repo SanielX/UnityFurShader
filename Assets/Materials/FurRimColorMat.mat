@@ -67,6 +67,18 @@ Material:
         m_Texture: {fileID: 8900000, guid: 81b555ad570142040a13a3dc45012cbf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SurfaceAmbient:
+        m_Texture: {fileID: 2800000, guid: c13d22a646cbbd34abd0343d492fd9c9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SurfaceNormal:
+        m_Texture: {fileID: 2800000, guid: 59509dd43bcb4424d9a54892dd8cc067, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SurfaceRoughness:
+        m_Texture: {fileID: 2800000, guid: 8afc0c3acce774c4fba0f663a45462ec, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Blur: 0
     - _BumpScale: 1
@@ -82,7 +94,7 @@ Material:
     - _FurShading: 0.488
     - _FurThinness: 6.28
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0.642
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0

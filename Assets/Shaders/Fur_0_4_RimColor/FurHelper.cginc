@@ -11,6 +11,7 @@ struct v2f
     float3 worldNormal: TEXCOORD1;
     float3 worldPos: TEXCOORD2;
 	half2 maskUv : TEXCOORD3;
+
 	UNITY_FOG_COORDS(4)
 };
 
@@ -24,7 +25,8 @@ sampler2D _FurTex;
 half4 _FurTex_ST;
 sampler2D _FurMask;
 half4 _FurMask_ST;
-
+sampler2D _SurfaceNormal;
+half4 _SurfaceNormal_ST;
 
 fixed _FurLength;
 fixed _FurDensity;
@@ -37,7 +39,14 @@ float4 _ForceLocal;
 fixed4 _RimColor;
 half _RimPower;
 
-v2f vert_surface(appdata_base v)
+struct appdata {
+	float4 vertex : POSITION;
+	float3 normal : NORMAL;
+	float2 texcoord : TEXCOORD0;
+	float2 uv : TEXCOORD1;
+};
+
+v2f vert_surface(appdata v)
 {
     v2f o;
     o.pos = UnityObjectToClipPos(v.vertex);
@@ -74,7 +83,7 @@ fixed4 frag_surface(v2f i): SV_Target
     fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
     fixed3 worldView = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
     fixed3 worldHalf = normalize(worldView + worldLight);
-    
+
     fixed3 albedo = tex2D(_MainTex, i.uv.xy).rgb * _Color;
     fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
     fixed3 diffuse = _LightColor0.rgb * albedo * saturate(dot(worldNormal, worldLight));

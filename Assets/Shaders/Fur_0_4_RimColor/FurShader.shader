@@ -9,41 +9,65 @@
         _MainTex ("Texture", 2D) = "white" { }
         _FurTex ("Fur Pattern", 2D) = "white" { }
 		_FurMask("Fur Mask", 2D) = "white" {}
+		[Space]
+		_SurfaceNormal("Surface Normalmap", 2D) = "white"{}
+		_SurfaceRoughness("Roughness map", 2D) = "white" {}
+		_SurfaceAmbient("Occlusion Map", 2D) = "white" {}
+		_Glossiness("Glossiness", Range(0,1)) = 1
+		[Space]
+		_FurLength("Fur Length", Range(0.0, 1)) = 0.5
+		_FurDensity("Fur Density", Range(0, 2)) = 0.11
+		_FurThinness("Fur Thinness", Range(0.01, 10)) = 1
+		_FurShading("Fur Shading", Range(0.0, 1)) = 0.25
 
-        _FurLength ("Fur Length", Range(0.0, 1)) = 0.5
-        _FurDensity ("Fur Density", Range(0, 2)) = 0.11
-        _FurThinness ("Fur Thinness", Range(0.01, 10)) = 1
-        _FurShading ("Fur Shading", Range(0.0, 1)) = 0.25
+		_ForceGlobal("Force Global", Vector) = (0, 0, 0, 0)
+		_ForceLocal("Force Local", Vector) = (0, 0, 0, 0)
 
-        _ForceGlobal ("Force Global", Vector) = (0, 0, 0, 0)
-        _ForceLocal ("Force Local", Vector) = (0, 0, 0, 0)
-        
-        _RimColor ("Rim Color", Color) = (0, 0, 0, 1)
-        _RimPower ("Rim Power", Range(0.0, 8.0)) = 6.0
-    }
-    
-    Category
-    {
+		_RimColor("Rim Color", Color) = (0, 0, 0, 1)
+		_RimPower("Rim Power", Range(0.0, 8.0)) = 6.0
+	}
 
-        Tags { "RenderType" = "Transparent" "IgnoreProjector" = "True" "Queue" = "Transparent" }
-        Cull Off
-        ZWrite On
-        Blend SrcAlpha OneMinusSrcAlpha
-        
-        SubShader
-        {
-            Pass
-            {
-                CGPROGRAM
-				#pragma multi_compile_fog
-                #pragma vertex vert_surface
-                #pragma fragment frag_surface
-                #define FURSTEP 0.00
-                #include "FurHelper.cginc"
-                
-                ENDCG
-                
-            }
+		Category
+		{
+			SubShader
+			{
+				Tags{ "RenderType" = "Transparent" "IgnoreProjector" = "True" "Queue" = "Transparent" }
+				Cull Off
+				ZWrite On
+
+			Blend SrcAlpha OneMinusSrcAlpha
+
+			LOD 200
+			CGPROGRAM
+
+#pragma surface surf Standard fullforwardshadows
+
+				// Use shader model 3.0 target, to get nicer looking lighting
+#pragma target 3.0
+
+			sampler2D _MainTex, _SurfaceNormal, _SurfaceAmbient, _SurfaceRoughness;
+
+			struct Input
+			{
+				float2 uv_MainTex, uv_SurfaceNormal, uv_SurfaceAmbient, uv_SurfaceRoughness;
+			};
+
+		half _Glossiness;
+
+		fixed4 _Color;
+
+			void surf(Input IN, inout SurfaceOutputStandard o)
+			{
+				fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+				o.Albedo = c.rgb;
+				o.Normal = UnpackNormal(tex2D(_SurfaceNormal, IN.uv_SurfaceNormal));
+				o.Occlusion = tex2D(_SurfaceAmbient, IN.uv_SurfaceAmbient);
+				o.Smoothness = tex2D(_SurfaceRoughness, IN.uv_SurfaceRoughness).r * _Glossiness;
+				o.Alpha = c.a;
+			}
+			ENDCG
+
+
 
             Pass
             {
