@@ -2,6 +2,7 @@
 {
     Properties
     {
+		[Header(Main properties)]
         _Color ("Color", Color) = (1, 1, 1, 1)
         _Specular ("Specular", Color) = (1, 1, 1, 1)
         _Shininess ("Shininess", Range(0.01, 256.0)) = 8.0
@@ -10,11 +11,13 @@
         _FurTex ("Fur Pattern", 2D) = "white" { }
 		_FurMask("Fur Mask", 2D) = "white" {}
 		[Space]
+		[Header(Surface under fur properties)]
 		_SurfaceNormal("Surface Normalmap", 2D) = "white"{}
 		_SurfaceRoughness("Roughness map", 2D) = "white" {}
 		_SurfaceAmbient("Occlusion Map", 2D) = "white" {}
 		_Glossiness("Glossiness", Range(0,1)) = 1
 		[Space]
+		[Header(Fur properties)]
 		_FurLength("Fur Length", Range(0.0, 1)) = 0.5
 		_FurDensity("Fur Density", Range(0, 2)) = 0.11
 		_FurThinness("Fur Thinness", Range(0.01, 10)) = 1

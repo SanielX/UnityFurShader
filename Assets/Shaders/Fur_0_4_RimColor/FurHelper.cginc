@@ -25,8 +25,6 @@ sampler2D _FurTex;
 half4 _FurTex_ST;
 sampler2D _FurMask;
 half4 _FurMask_ST;
-sampler2D _SurfaceNormal;
-half4 _SurfaceNormal_ST;
 
 fixed _FurLength;
 fixed _FurDensity;
@@ -117,9 +115,9 @@ fixed4 frag_base(v2f i): SV_Target
 
     fixed3 color = ambient + diffuse + specular;
     fixed3 noise = tex2D(_FurTex, i.uv.zw * _FurThinness).rgb;
-    fixed alpha = clamp(noise - ((FURSTEP * FURSTEP) * _FurDensity), 0, 1);
-    
-	alpha = lerp(0, alpha, lenghtFromTex);
+    fixed alpha = clamp(noise* lenghtFromTex - ((FURSTEP * FURSTEP) * _FurDensity), 0, 1) ;
+	
+
 
 	UNITY_APPLY_FOG(i.fogCoord, color);
 
