@@ -5,27 +5,8 @@ http://sorumi.xyz/posts/unity-fur-shader/
 
 <img src="Docs/Intro.png"/>
 
-
-#### 0.1 Basic
-Basic fur shader with ambient, diffuse and specular.
-
-<img src="Docs/Fur_0_1_Basic.png" width="600"/>
-
-
-#### 0.2 Attributes
-Add fur attributes: density, thinness, shading.
-
-<img src="Docs/Fur_0_2_Attributes.png" width="600"/>
-
-
-#### 0.3 Force
-Add force: global force and local force .
-
-<img src="Docs/Fur_0_3_Force.png" width="600"/>
-
-
-#### 0.4 Rim Color
-Add rim color
+#### Rim Color - the only one I edited
+Added fog support and fur mask
 
 <img src="Docs/Fur_0_4_RimColor.png" width="600"/>
 
