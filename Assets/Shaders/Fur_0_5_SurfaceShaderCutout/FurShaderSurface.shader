@@ -112,6 +112,7 @@
         #include "SurfaceFurHelper.cginc"
         ENDCG
         
+        CGPROGRAM
         #define FURSTEP 1
         #pragma surface surf Lambert fullforwardshadows vertex:vert alphatest:_Cutoff
         #pragma target 3.0
